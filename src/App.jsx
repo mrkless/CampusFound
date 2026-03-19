@@ -28,6 +28,7 @@ function App() {
               <Route path="/lost" element={<LostItems />} />
               <Route path="/found" element={<FoundItems />} />
               <Route path="/items/:id" element={<ItemDetails />} />
+              <Route path="/profile/:id" element={<Profile />} />
 
               <Route element={<ProtectedRoute />}>
                 <Route path="/post" element={<PostItem />} />

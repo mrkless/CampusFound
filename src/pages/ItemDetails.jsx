@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../context/AuthContext';
-import { MapPin, Calendar, Tag, User, Mail, ArrowLeft, CheckCircle, Clock, AlertTriangle, Trash2, Edit2 } from 'lucide-react';
+import { MapPin, Calendar, Tag, User, Mail, ArrowLeft, CheckCircle, Clock, AlertTriangle, Trash2, Edit2, Phone } from 'lucide-react';
 import Modal from '../components/common/Modal';
 import { useNotification } from '../context/NotificationContext';
 
@@ -19,6 +19,7 @@ const ItemDetails = () => {
 
   const [showResolveModal, setShowResolveModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
   useEffect(() => {
     fetchItemDetails();
@@ -31,7 +32,7 @@ const ItemDetails = () => {
         .from('items')
         .select(`
           *,
-          profiles:user_id (name, email)
+          profiles:user_id (id, name, email, phone)
         `)
         .eq('id', id)
         .single();
@@ -192,7 +193,20 @@ const ItemDetails = () => {
                 </div>
                 <div>
                   <p className="text-xs text-slate-400 font-medium uppercase tracking-wider">Posted By</p>
-                  <p className="font-semibold text-slate-900">{posterProfile?.name || 'Anonymous'}</p>
+                  <button
+                    onClick={(e) => {
+                      if (!user) {
+                        e.preventDefault();
+                        setShowAuthModal(true);
+                      } else {
+                        navigate(`/profile/${item.user_id}`);
+                      }
+                    }}
+                    className="font-semibold text-primary-600 hover:text-primary-700 transition-colors hover:underline flex items-center gap-1"
+                  >
+                    {posterProfile?.name || 'Anonymous'}
+                    <span className="text-[10px] bg-primary-100 px-1.5 py-0.5 rounded-full font-bold uppercase">View Profile</span>
+                  </button>
                 </div>
               </div>
             </div>
@@ -235,7 +249,7 @@ const ItemDetails = () => {
                   </button>
                 </div>
               ) : (
-                <div className="p-6 border-2 border-primary-100 rounded-2xl bg-primary-50/50">
+                <div className="relative p-6 border-2 border-primary-100 rounded-2xl bg-primary-50/50 overflow-hidden">
                   <h3 className="text-lg font-bold text-slate-900 mb-2 flex items-center gap-2">
                     <Mail className="text-primary-600" size={20} />
                     Contact Information
@@ -243,19 +257,41 @@ const ItemDetails = () => {
                   <p className="text-slate-600 mb-4 text-sm">
                     Please contact the person who reported this item if you have any information or believe it's yours.
                   </p>
-                  <a
-                    href={`mailto:${posterProfile?.email}`}
-                    className="btn btn-primary w-full py-3"
-                  >
-                    Email {posterProfile?.name}
-                  </a>
-                </div>
-              )}
 
-              {!user && (
-                <div className="p-4 bg-amber-50 border border-amber-100 rounded-xl flex items-center gap-3 text-amber-700">
-                  <AlertTriangle size={20} className="shrink-0" />
-                  <p className="text-sm font-medium">Please <Link to="/login" className="underline">sign in</Link> to view contact information.</p>
+                  <div className="relative">
+                    <div className={!user ? "blur-[4px] select-none pointer-events-none transition-all" : "transition-all"}>
+                      <div className="flex flex-col gap-3">
+                        <a
+                          href={`mailto:${posterProfile?.email}`}
+                          className="btn btn-primary w-full py-3 flex items-center justify-center gap-2"
+                        >
+                          <Mail size={18} />
+                          {posterProfile?.name || 'Contact User'}
+                        </a>
+                        
+                        {posterProfile?.phone && (
+                          <a
+                            href={`tel:${posterProfile.phone}`}
+                            className="btn bg-white text-primary-600 border-2 border-primary-100 hover:bg-primary-50 w-full py-3 flex items-center justify-center gap-2 transition-all"
+                          >
+                            <Phone size={18} />
+                            {posterProfile.phone}
+                          </a>
+                        )}
+                      </div>
+                    </div>
+
+                    {!user && (
+                      <div className="absolute inset-0 z-10 flex items-center justify-center">
+                        <button 
+                          onClick={() => setShowAuthModal(true)}
+                          className="text-primary-600 font-bold hover:underline bg-white/80 px-4 py-2 rounded-full shadow-sm backdrop-blur-sm transition-all text-sm"
+                        >
+                          Sign in to view
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </div>
               )}
             </div>
@@ -283,6 +319,31 @@ const ItemDetails = () => {
         confirmText="Yes, Delete"
         type="danger"
       />
+
+      <Modal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
+        title="Sign In Required"
+        message="Please sign up or log in to view this page."
+        showClose={true}
+        type="info"
+        maxWidth="max-w-sm"
+      >
+        <div className="grid grid-cols-2 gap-3 mt-4">
+          <button
+            onClick={() => navigate('/login')}
+            className="btn btn-primary py-3 text-sm font-bold"
+          >
+            Login
+          </button>
+          <button
+            onClick={() => navigate('/register')}
+            className="btn bg-slate-100 text-slate-700 hover:bg-slate-200 py-3 text-sm font-bold"
+          >
+            Sign Up
+          </button>
+        </div>
+      </Modal>
     </div>
   );
 };

@@ -97,15 +97,17 @@ const Modal = ({
           {children}
 
           <div className="flex flex-col gap-2 mt-6">
-            <button
-              onClick={() => {
-                onConfirm();
-                if (!onCancel) onClose();
-              }}
-              className={`w-full py-3 rounded-xl text-white font-bold text-sm transition-all active:scale-[0.98] ${active.button}`}
-            >
-              {confirmText}
-            </button>
+            {onConfirm && (
+              <button
+                onClick={() => {
+                  onConfirm();
+                  if (!onCancel) onClose();
+                }}
+                className={`w-full py-3 rounded-xl text-white font-bold text-sm transition-all active:scale-[0.98] ${active.button}`}
+              >
+                {confirmText}
+              </button>
+            )}
 
             {cancelText && (
               <button
