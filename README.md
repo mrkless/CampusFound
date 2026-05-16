@@ -1,16 +1,96 @@
-# React + Vite
+# 🎓 CampusFound | Lost & Found Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.io/)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://campus-found-drab.vercel.app/)
 
-Currently, two official plugins are available:
+**CampusFound** is a modern, premium web application designed to help students and faculty members reunite with their lost belongings on campus. Built with speed, security, and a stunning UI in mind.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+🔗 **[Live Demo](https://campus-found-drab.vercel.app/)**
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## ✨ Key Features
 
-## Expanding the ESLint configuration
+- 🔐 **Secure Authentication**: Integrated with Supabase Auth for safe user registration and login.
+- 🔍 **Lost & Found Items**: Easily report lost items or post found items with descriptions and locations.
+- 🖼️ **Image Support**: Upload photos of found items to help owners identify them quickly.
+- 👤 **User Profiles**: Manage your postings and profile details in a sleek dashboard.
+- 🌓 **Premium Design**: Modern aesthetic with dark mode support, smooth animations (Framer Motion), and a responsive layout.
+- 🔔 **Real-time Notifications**: Instant feedback with React Hot Toast.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🚀 Tech Stack
+
+- **Frontend**: [React 19](https://react.dev/)
+- **Build Tool**: [Vite](https://vitejs.dev/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Database & Auth**: [Supabase](https://supabase.com/)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Routing**: [React Router 7](https://reactrouter.com/)
+
+---
+
+## 🛠️ Getting Started
+
+### Prerequisites
+
+- Node.js (v18 or higher)
+- npm or yarn
+- A Supabase account and project
+
+### Installation
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/mrkless/CampusFound.git
+   cd CampusFound
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+3. **Set up Environment Variables**:
+   Create a `.env` file in the root directory and add your Supabase credentials:
+   ```env
+   VITE_SUPABASE_URL=your_supabase_url
+   VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+   ```
+
+4. **Run the development server**:
+   ```bash
+   npm run dev
+   ```
+
+---
+
+## 📁 Project Structure
+
+```text
+src/
+├── components/     # Reusable UI components (Auth, Items, Layout, etc.)
+├── context/        # React context for state management
+├── lib/            # External library configurations (Supabase client)
+├── pages/          # Main application views (Home, Profile, Login, etc.)
+├── assets/         # Static assets (images, icons)
+├── App.jsx         # Main App component and routing
+└── main.jsx        # Entry point
+```
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+<p align="center">
+  Developed with ❤️ by <b>Lester Bucag</b> for the Campus Community
+</p>
